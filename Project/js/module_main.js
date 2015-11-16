@@ -36,6 +36,7 @@ app.main =
 		this.canvas.width = this.WIDTH;
 		this.canvas.height = this.HEIGHT;
 		this.ctx = this.canvas.getContext('2d');
+		this.ctx.imageSmoothingEnabled = false;
 		
 		// start the game loop
 		this.update();
@@ -52,6 +53,23 @@ app.main =
 		
 		//Clear
 		this.ctx.clearRect(0, 0, this.WIDTH, this.HEIGHT);
+		
+		//Stuff
+		this.ctx.save();
+		var imgData = this.ctx.getImageData(0, 0, 48, 48);
+		var data = imgData.data;
+		var length = data.length;
+		var width = imgData.width;
+		var height = imgData.height;
+		for(var i = 0; i < length; i += 4)
+		{
+			data[i] = 128;
+			data[i + 1] = 128;
+			data[i + 2] = 128;
+			data[i + 3] = 255;
+		}
+		this.ctx.putImageData(imgData, 0, 0);
+		this.ctx.restore();
 		
 		//Draw debug info
 		if (this.debug)
