@@ -25,6 +25,8 @@ app.main =
     debug : true,				// debug
 	animationID : 0,			//ID index of the current frame.
 	
+	radius : 12,
+	
     //Initialization
 	init : function()
 	{
@@ -36,6 +38,8 @@ app.main =
 		this.canvas.width = this.WIDTH;
 		this.canvas.height = this.HEIGHT;
 		this.ctx = this.canvas.getContext('2d');
+		this.ctx.mozImageSmoothingEnabled = false;
+		this.ctx.msImageSmoothingEnabled = false;
 		this.ctx.imageSmoothingEnabled = false;
 		
 		// start the game loop
@@ -52,23 +56,31 @@ app.main =
 	 	var dt = this.calculateDeltaTime();
 		
 		//Clear
-		this.ctx.clearRect(0, 0, this.WIDTH, this.HEIGHT);
+		this.ctx.save();
+		this.ctx.fillStyle = "#000";
+		this.ctx.fillRect(0, 0, this.WIDTH, this.HEIGHT);
+		this.ctx.restore();
 		
 		//Stuff
 		this.ctx.save();
-		var imgData = this.ctx.getImageData(0, 0, 48, 48);
-		var data = imgData.data;
-		var length = data.length;
-		var width = imgData.width;
-		var height = imgData.height;
-		for(var i = 0; i < length; i += 4)
-		{
-			data[i] = 128;
-			data[i + 1] = 128;
-			data[i + 2] = 128;
-			data[i + 3] = 255;
-		}
-		this.ctx.putImageData(imgData, 0, 0);
+		this.ctx.arc(
+			this.radius,
+			this.radius,
+			this.radius,
+			0,
+			Math.PI * 2);
+		this.ctx.fillStyle = "#FFF";
+		this.ctx.fill();
+		this.ctx.drawImage(
+			this.canvas, 
+			0, 
+			0, 
+			this.radius * 2, 
+			this.radius * 2, 
+			0, 
+			0, 
+			this.WIDTH,
+			this.HEIGHT);
 		this.ctx.restore();
 		
 		//Draw debug info
