@@ -27,6 +27,8 @@ app.main =
 	
 	radius : 12,
 	
+	testImage : undefined,
+	
     //Initialization
 	init : function()
 	{
@@ -41,6 +43,11 @@ app.main =
 		this.ctx.mozImageSmoothingEnabled = false;
 		this.ctx.msImageSmoothingEnabled = false;
 		this.ctx.imageSmoothingEnabled = false;
+		
+		//Test image
+		this.testImage = new Image(16, 16);
+		this.testImage.src = "assets/temp.png";
+		console.log(this.testImage);
 		
 		// start the game loop
 		this.update();
@@ -57,8 +64,9 @@ app.main =
 		
 		//Clear
 		this.ctx.save();
-		this.ctx.fillStyle = "#000";
-		this.ctx.fillRect(0, 0, this.WIDTH, this.HEIGHT);
+		//this.ctx.fillStyle = "#000";
+		//this.ctx.fillRect(0, 0, this.WIDTH, this.HEIGHT);
+		this.ctx.clearRect(0, 0, this.WIDTH, this.HEIGHT);
 		this.ctx.restore();
 		
 		//Stuff
@@ -71,6 +79,7 @@ app.main =
 			Math.PI * 2);
 		this.ctx.fillStyle = "#FFF";
 		this.ctx.fill();
+		/*
 		this.ctx.drawImage(
 			this.canvas, 
 			0, 
@@ -79,6 +88,17 @@ app.main =
 			this.radius * 2, 
 			0, 
 			0, 
+			this.WIDTH,
+			this.HEIGHT);
+		*/
+		this.ctx.drawImage(
+			this.testImage, 
+			0, 
+			0,
+			this.testImage.width,
+			this.testImage.height,
+			0,
+			0,
 			this.WIDTH,
 			this.HEIGHT);
 		this.ctx.restore();
