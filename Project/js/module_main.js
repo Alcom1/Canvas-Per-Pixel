@@ -47,7 +47,12 @@ app.main =
 		//Test image
 		this.testImage = new Image(16, 16);
 		this.testImage.src = "assets/temp.png";
-		console.log(this.testImage);
+		
+		var scale1 = [];
+		var scale2 = [];
+		var scale4 = [];
+		
+		scale1.push(testImage);
 		
 		// start the game loop
 		this.update();
@@ -110,6 +115,14 @@ app.main =
 			this.fillText("dt: " + dt.toFixed(3), this.WIDTH - 140, this.HEIGHT - 10, "18pt courier", "white");
 		}
 	},
+	
+	drawScene : function(ctx, scale, images)
+	{
+		for(var i = 0; i < images.length; i++)
+		{
+			
+		}
+	}
 	
 	//Draw filled text
 	fillText : function(string, x, y, css, color)
