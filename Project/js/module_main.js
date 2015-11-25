@@ -17,7 +17,7 @@ var app = app || {};
  */
 app.main =
 {
-    WIDTH : 480, 				// Canvas width
+    WIDTH : 640, 				// Canvas width
     HEIGHT : 480,				// Canvas height
     canvas : undefined,			// Canvas
     ctx : undefined,			// Canvas context
@@ -52,7 +52,7 @@ app.main =
 		var scale2 = [];
 		var scale4 = [];
 		
-		scale1.push(testImage);
+		scale1.push(this.testImage);
 		
 		// start the game loop
 		this.update();
@@ -69,43 +69,16 @@ app.main =
 		
 		//Clear
 		this.ctx.save();
-		//this.ctx.fillStyle = "#000";
-		//this.ctx.fillRect(0, 0, this.WIDTH, this.HEIGHT);
-		this.ctx.clearRect(0, 0, this.WIDTH, this.HEIGHT);
+		this.ctx.fillStyle = "#000";
+		this.ctx.fillRect(0, 0, this.WIDTH, this.HEIGHT);
+		//this.ctx.clearRect(0, 0, this.WIDTH, this.HEIGHT);
 		this.ctx.restore();
 		
 		//Stuff
 		this.ctx.save();
-		this.ctx.arc(
-			this.radius,
-			this.radius,
-			this.radius,
-			0,
-			Math.PI * 2);
-		this.ctx.fillStyle = "#FFF";
-		this.ctx.fill();
-		/*
-		this.ctx.drawImage(
-			this.canvas, 
-			0, 
-			0, 
-			this.radius * 2, 
-			this.radius * 2, 
-			0, 
-			0, 
-			this.WIDTH,
-			this.HEIGHT);
-		*/
-		this.ctx.drawImage(
-			this.testImage, 
-			0, 
-			0,
-			this.testImage.width,
-			this.testImage.height,
-			0,
-			0,
-			this.WIDTH,
-			this.HEIGHT);
+		this.drawScene(this.ctx, 1, scale1);
+		this.drawScene(this.ctx, 2, scale2);
+		this.drawScene(this.ctx, 4, scale4);
 		this.ctx.restore();
 		
 		//Draw debug info
@@ -116,13 +89,27 @@ app.main =
 		}
 	},
 	
-	drawScene : function(ctx, scale, images)
+	drawTest : function(ctx)
 	{
-		for(var i = 0; i < images.length; i++)
+		ctx.drawImage(
+			this.testImage, 
+			0, 
+			0,
+			this.testImage.width,
+			this.testImage.height,
+			0,
+			0,
+			this.WIDTH,
+			this.HEIGHT);
+	},
+	
+	drawScene : function(ctx, scale, objects)
+	{
+		for(var i = 0; i < objects.length; i++)
 		{
 			
 		}
-	}
+	},
 	
 	//Draw filled text
 	fillText : function(string, x, y, css, color)
