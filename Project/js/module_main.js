@@ -52,7 +52,7 @@ app.main =
 		this.scale2 = [];
 		this.scale4 = [];
 		
-		this.scale2.push(new Object(20, 20, testImage));
+		this.scale4.push(new Object(20, 20, testImage));
 		
 		// start the game loop
 		this.update();
