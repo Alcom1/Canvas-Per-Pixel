@@ -25,7 +25,7 @@ app.main =
     debug : true,				// debug
 	animationID : 0,			//ID index of the current frame.
 	
-	objects : undefined,
+	objs : undefined,
 	
     //Initialization
 	init : function()
@@ -72,7 +72,7 @@ app.main =
 		
 		//Stuff
 		this.ctx.save();
-		this.drawScene(this.ctx, this.objects);
+		this.drawScene(this.ctx, this.objs);
 		this.ctx.restore();
 		
 		//Draw debug info

@@ -1,11 +1,11 @@
-var Object = function(x, y, sprite, scale)
+var Obj = function(x, y, sprite, scale)
 {
 	this.pos = new Vect(x, y, 0);
 	this.sprite = sprite;
 	this.scale = scale;
 }
 
-Object.prototype.draw = function(ctx)
+Obj.prototype.draw = function(ctx)
 {
 	ctx.save();
 	ctx.drawImage(
