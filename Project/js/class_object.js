@@ -1,4 +1,4 @@
-var object = function(x, y, sprite)
+var Object = function(x, y, sprite)
 {
 	this.pos = new Vect(x, y, 0);
 	this.sprite = sprite;
@@ -6,16 +6,16 @@ var object = function(x, y, sprite)
 
 Object.prototype.draw = function(ctx, scale)
 {
-	this.ctx.save();
-	this.ctx.drawImage(
-		this.testImage, 
+	ctx.save();
+	ctx.drawImage(
+		this.sprite, 
 		0, 
 		0,
-		this.testImage.width,
-		this.testImage.height,
-		this.pos.x,
-		this.pos.y,
 		this.sprite.width,
-		this.sprite.height);
-	this.ctx.restore();
+		this.sprite.height,
+		this.pos.x * scale,
+		this.pos.y * scale,
+		this.sprite.width * scale,
+		this.sprite.height * scale);
+	ctx.restore();
 }

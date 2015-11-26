@@ -25,9 +25,9 @@ app.main =
     debug : true,				// debug
 	animationID : 0,			//ID index of the current frame.
 	
-	radius : 12,
-	
-	testImage : undefined,
+	scale1 : undefined,
+	scale2 : undefined,
+	scale4 : undefined,
 	
     //Initialization
 	init : function()
@@ -45,14 +45,14 @@ app.main =
 		this.ctx.imageSmoothingEnabled = false;
 		
 		//Test image
-		this.testImage = new Image(16, 16);
-		this.testImage.src = "assets/temp.png";
+		var testImage = new Image(16, 16);
+		testImage.src = "assets/diamond.png";
 		
-		var scale1 = [];
-		var scale2 = [];
-		var scale4 = [];
+		this.scale1 = [];
+		this.scale2 = [];
+		this.scale4 = [];
 		
-		scale1.push(this.testImage);
+		this.scale2.push(new Object(20, 20, testImage));
 		
 		// start the game loop
 		this.update();
@@ -76,9 +76,9 @@ app.main =
 		
 		//Stuff
 		this.ctx.save();
-		this.drawScene(this.ctx, 1, scale1);
-		this.drawScene(this.ctx, 2, scale2);
-		this.drawScene(this.ctx, 4, scale4);
+		this.drawScene(this.ctx, 1, this.scale1);
+		this.drawScene(this.ctx, 2, this.scale2);
+		this.drawScene(this.ctx, 4, this.scale4);
 		this.ctx.restore();
 		
 		//Draw debug info
@@ -107,7 +107,7 @@ app.main =
 	{
 		for(var i = 0; i < objects.length; i++)
 		{
-			
+			objects[i].draw(ctx, scale);
 		}
 	},
 	
