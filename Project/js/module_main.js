@@ -25,9 +25,7 @@ app.main =
     debug : true,				// debug
 	animationID : 0,			//ID index of the current frame.
 	
-	scale1 : undefined,
-	scale2 : undefined,
-	scale4 : undefined,
+	objects : undefined,
 	
     //Initialization
 	init : function()
@@ -48,11 +46,9 @@ app.main =
 		var testImage = new Image(16, 16);
 		testImage.src = "assets/diamond.png";
 		
-		this.scale1 = [];
-		this.scale2 = [];
-		this.scale4 = [];
+		this.objs = [];
 		
-		this.scale4.push(new Object(20, 20, testImage));
+		this.objs.push(new Obj(20, 20, testImage, 4));
 		
 		// start the game loop
 		this.update();
@@ -76,9 +72,7 @@ app.main =
 		
 		//Stuff
 		this.ctx.save();
-		this.drawScene(this.ctx, 1, this.scale1);
-		this.drawScene(this.ctx, 2, this.scale2);
-		this.drawScene(this.ctx, 4, this.scale4);
+		this.drawScene(this.ctx, this.objects);
 		this.ctx.restore();
 		
 		//Draw debug info
@@ -103,11 +97,11 @@ app.main =
 			this.HEIGHT);
 	},
 	
-	drawScene : function(ctx, scale, objects)
+	drawScene : function(ctx, objs)
 	{
-		for(var i = 0; i < objects.length; i++)
+		for(var i = 0; i < objs.length; i++)
 		{
-			objects[i].draw(ctx, scale);
+			objs[i].draw(ctx);
 		}
 	},
 	
