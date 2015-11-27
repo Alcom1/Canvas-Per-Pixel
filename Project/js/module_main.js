@@ -22,7 +22,7 @@ app.main =
     canvas : undefined,			// Canvas
     ctx : undefined,			// Canvas context
    	lastTime : 0, 				// used by calculateDeltaTime() 
-    debug : true,				// debug
+    debug : false,				// debug
 	animationID : 0,			//ID index of the current frame.
 	
 	soul : undefined,
@@ -43,22 +43,23 @@ app.main =
 		this.ctx.msImageSmoothingEnabled = false;
 		this.ctx.imageSmoothingEnabled = false;
 		
-		//Test image
-		var testImage = new Image(16, 16);
-		testImage.src = "assets/diamond.png";
+		//Soul image
+		var soulImage = new Image(16, 16);
+		soulImage.src = "assets/heart.png";
 		
-		this.soul = new Soul(309, 310, testImage, 1);
+		//Objects
+		this.soul = new Soul(309, 310, soulImage, 1);
 		this.bbox = new Bbox(162, 250, 315, 140, 1);
 		
 		// start the game loop
-		this.update();
+		this.frame();
 	},
 	
 	//Core update
-	update : function()
+	frame : function()
 	{
 		//LOOP
-	 	this.animationID = requestAnimationFrame(this.update.bind(this));
+	 	this.animationID = requestAnimationFrame(this.frame.bind(this));
 	 	
 	 	//Calculate Delta Time of frame
 	 	var dt = this.calculateDeltaTime();
@@ -67,10 +68,12 @@ app.main =
 		this.ctx.save();
 		this.ctx.fillStyle = "#000";
 		this.ctx.fillRect(0, 0, this.WIDTH, this.HEIGHT);
-		//this.ctx.clearRect(0, 0, this.WIDTH, this.HEIGHT);
 		this.ctx.restore();
 		
-		//Stuff
+		//Logic
+		this.update(dt);
+		
+		//Draw
 		this.ctx.save();
 		this.drawScene(this.ctx);
 		this.ctx.restore();
@@ -83,6 +86,13 @@ app.main =
 		}
 	},
 	
+	update : function(dt)
+	{
+		this.soul.move(dt);
+		this.soul.limit(this.bbox);
+	},
+	
+	//Draw the main scene
 	drawScene : function(ctx, objs)
 	{
 		this.bbox.draw(ctx);
