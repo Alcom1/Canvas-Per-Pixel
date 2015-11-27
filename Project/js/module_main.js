@@ -48,7 +48,8 @@ app.main =
 		
 		this.objs = [];
 		
-		this.objs.push(new Obj(20, 20, testImage, 4));
+		this.objs.push(new Soul(309, 310, testImage, 1));
+		this.objs.push(new Bbox(162, 250, 315, 140, 1));
 		
 		// start the game loop
 		this.update();
