@@ -25,7 +25,8 @@ app.main =
     debug : true,				// debug
 	animationID : 0,			//ID index of the current frame.
 	
-	objs : undefined,
+	soul : undefined,
+	bbox : undefined,
 	
     //Initialization
 	init : function()
@@ -46,10 +47,8 @@ app.main =
 		var testImage = new Image(16, 16);
 		testImage.src = "assets/diamond.png";
 		
-		this.objs = [];
-		
-		this.objs.push(new Soul(309, 310, testImage, 1));
-		this.objs.push(new Bbox(162, 250, 315, 140, 1));
+		this.soul = new Soul(309, 310, testImage, 1);
+		this.bbox = new Bbox(162, 250, 315, 140, 1);
 		
 		// start the game loop
 		this.update();
@@ -73,7 +72,7 @@ app.main =
 		
 		//Stuff
 		this.ctx.save();
-		this.drawScene(this.ctx, this.objs);
+		this.drawScene(this.ctx);
 		this.ctx.restore();
 		
 		//Draw debug info
@@ -84,26 +83,10 @@ app.main =
 		}
 	},
 	
-	drawTest : function(ctx)
-	{
-		ctx.drawImage(
-			this.testImage, 
-			0, 
-			0,
-			this.testImage.width,
-			this.testImage.height,
-			0,
-			0,
-			this.WIDTH,
-			this.HEIGHT);
-	},
-	
 	drawScene : function(ctx, objs)
 	{
-		for(var i = 0; i < objs.length; i++)
-		{
-			objs[i].draw(ctx);
-		}
+		this.bbox.draw(ctx);
+		this.soul.draw(ctx);
 	},
 	
 	//Draw filled text
