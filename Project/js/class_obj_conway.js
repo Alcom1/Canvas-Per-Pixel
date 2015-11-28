@@ -88,7 +88,7 @@ Conway.prototype.checkPixel = function(x, y)
 		{
 			check++;
 		}
-		if(this.data[(y + 1) % this.data.length][(x + k) % this.data[0].length])
+		if(this.data[(y - 1).mod(this.data.length)][(x + k) % this.data[0].length])
 		{
 			check++;
 		}
