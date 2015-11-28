@@ -15,6 +15,8 @@ function Conway(x, y, width, height, scale)
 			this.data[j][i] = false;
 		}
 	}
+	this.time = .05;
+	this.counter = 0;
 }
 
 Conway.prototype = Object.create(Obj.prototype);
@@ -68,24 +70,50 @@ Conway.prototype.createGlider = function(x, y)
 	this.data[y + 2][x + 1] = true;
 }
 
-Conway.prototype.update = function()
+Conway.prototype.createEngine = function(x, y)
 {
-	var newData = [];
+	this.data[y + 0][x + 0] = true;
+	this.data[y + 0][x + 1] = true;
+	this.data[y + 0][x + 2] = true;
+	this.data[y + 0][x + 4] = true;
+	this.data[y + 1][x + 0] = true;
+	this.data[y + 2][x + 3] = true;
+	this.data[y + 2][x + 4] = true;
+	this.data[y + 3][x + 1] = true;
+	this.data[y + 3][x + 2] = true;
+	this.data[y + 3][x + 4] = true;
+	this.data[y + 4][x + 0] = true;
+	this.data[y + 4][x + 2] = true;
+	this.data[y + 4][x + 4] = true;
+}
+
+
+Conway.prototype.update = function(dt)
+{
+	this.counter += dt;
+	console.log(this.counter);
 	
-	for (var i = 0; i < this.data.length; i++)
+	if(this.counter > this.time)
 	{
-    	newData[i] = this.data[i].slice();
-	}
-	
-	for(var j = 0; j < this.data.length; j++)
-	{
-		for(var i = 0; i < this.data[0].length; i++)
+		this.counter = this.counter - this.time;
+		
+		var newData = [];
+		
+		for (var i = 0; i < this.data.length; i++)
 		{
-			newData[j][i] = this.checkPixel(j, i);
+			newData[i] = this.data[i].slice();
 		}
+		
+		for(var j = 0; j < this.data.length; j++)
+		{
+			for(var i = 0; i < this.data[0].length; i++)
+			{
+				newData[j][i] = this.checkPixel(j, i);
+			}
+		}
+		
+		this.data = newData;
 	}
-	
-	this.data = newData;
 }
 
 Conway.prototype.checkPixel = function(j, i)

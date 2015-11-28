@@ -50,12 +50,8 @@ app.main =
 		
 		//Objects
 		this.conway = new Conway(167, 255, 77, 33, 4);
-		this.conway.createGlider(0, 0);
-		this.conway.createGlider(10, 10);
-		this.conway.createGlider(20, 0);
-		this.conway.createGlider(30, 10);
-		this.conway.createGlider(40, 0);
-		this.conway.createGlider(20, 20);
+		this.conway.createEngine(70, 25);
+		this.conway.createEngine(25, 25);
 		this.bbox = new Bbox(320, 320, 316, 140, 1);
 		this.soul = new Soul(309, 310, soulImage, 1);
 		
@@ -96,7 +92,7 @@ app.main =
 	
 	update : function(dt)
 	{
-		this.conway.update();
+		this.conway.update(dt);
 		this.bbox.transition(dt);
 		this.soul.move(dt);
 		this.soul.limit(this.bbox.getBound());
