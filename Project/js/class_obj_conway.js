@@ -91,7 +91,6 @@ Conway.prototype.createEngine = function(x, y, flipX, flipY)
 Conway.prototype.update = function(dt)
 {
 	this.counter += dt;
-	console.log(this.counter);
 	
 	if(this.counter > this.time)
 	{

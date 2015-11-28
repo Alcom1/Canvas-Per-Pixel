@@ -44,9 +44,20 @@ app.main =
 		this.ctx.msImageSmoothingEnabled = false;
 		this.ctx.imageSmoothingEnabled = false;
 		
+		//Setup
+		this.setup();
+		
+		// start the game loop
+		this.frame();
+	},
+	
+	setup : function()
+	{
 		//Soul image
 		var soulImage = new Image(16, 16);
 		soulImage.src = "assets/heart.png";
+		var soulImageDmg = new Image(16, 16);
+		soulImageDmg.src = "assets/heart_dmg.png";
 		
 		//Objects
 		this.conway = new Conway(167, 255, 77, 33, 4);
@@ -59,10 +70,8 @@ app.main =
 		this.conway.createGlider(12, 0, 1, 1);
 		this.conway.createGlider(4, 24, 1, -1);
 		this.bbox = new Bbox(320, 320, 316, 140, 1);
-		this.soul = new Soul(309, 310, soulImage, 1);
-		
-		// start the game loop
-		this.frame();
+		this.soul = new Soul(309, 310, soulImage, soulImageDmg, 1);
+		this.soul.getCollision(this.ctx);
 	},
 	
 	//Core update
@@ -70,6 +79,12 @@ app.main =
 	{
 		//LOOP
 	 	this.animationID = requestAnimationFrame(this.frame.bind(this));
+		 
+		//Damage reset
+		if(this.soul.dmg)
+		{
+			this.setup();	
+		}
 	 	
 	 	//Calculate Delta Time of frame
 	 	var dt = this.calculateDeltaTime();
@@ -109,6 +124,7 @@ app.main =
 	{
 		this.bbox.draw(ctx);
 		this.conway.draw(ctx);
+		this.soul.checkCollision(ctx);
 		this.soul.draw(ctx);
 	},
 	
