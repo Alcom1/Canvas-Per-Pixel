@@ -55,9 +55,8 @@ app.main =
 	setup : function()
 	{
 		//Soul image
-		var soulImage = new Image(16, 16);
-		soulImage.src = "assets/heart.png";
-		var soulImageDmg = new Image(16, 16);
+		var soulImage = document.getElementById("heart");
+		var soulImageDmg = document.getElementById("heart_dmg");
 		soulImageDmg.src = "assets/heart_dmg.png";
 		
 		//Objects

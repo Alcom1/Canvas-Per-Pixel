@@ -46,6 +46,8 @@ Soul.prototype.getCollision = function(ctx)
 		this.pos.y,
 		this.sprite.width,
 		this.sprite.height);
+		
+	console.log(imgData.data);
 	
 	//For each pixel at player position, if it's red, add that pixel to the collision data.
 	for(var j = 0; j < imgData.height; j++)
