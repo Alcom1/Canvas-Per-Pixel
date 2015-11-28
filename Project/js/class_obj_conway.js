@@ -70,19 +70,28 @@ Conway.prototype.createGlider = function(x, y)
 
 Conway.prototype.update = function()
 {
+	var newData = [];
+	
+	for (var i = 0; i < this.data.length; i++)
+	{
+    	newData[i] = this.data[i].slice();
+	}
+	
 	for(var j = 0; j < this.data.length; j++)
 	{
 		for(var i = 0; i < this.data[0].length; i++)
 		{
-			this.checkPixel(i, j);
+			newData[j][i] = this.checkPixel(i, j);
 		}
 	}
+	
+	this.data = newData;
 }
 
 Conway.prototype.checkPixel = function(x, y)
 {
 	var check = 0;
-	for(var k = -1; k < 2; k++)
+	for(var k = -1; k < 1; k++)
 	{
 		if(this.data[(y + 1) % this.data.length][(x + k) % this.data[0].length])
 		{
@@ -104,10 +113,10 @@ Conway.prototype.checkPixel = function(x, y)
 	
 	if(check < 2 || check > 3)
 	{
-		this.data[y][x] = false;
+		return false;
 	}
 	else
 	{
-		this.data[y][x] = true;
+		return true;
 	}
 }
