@@ -22,11 +22,12 @@ app.main =
     canvas : undefined,			// Canvas
     ctx : undefined,			// Canvas context
    	lastTime : 0, 				// used by calculateDeltaTime() 
-    debug : false,				// debug
+    debug : true,				// debug
 	animationID : 0,			//ID index of the current frame.
 	
 	soul : undefined,
 	bbox : undefined,
+	conway : undefined,
 	
     //Initialization
 	init : function()
@@ -48,8 +49,10 @@ app.main =
 		soulImage.src = "assets/heart.png";
 		
 		//Objects
-		this.soul = new Soul(309, 310, soulImage, 1);
+		this.conway = new Conway(320 - 200, 320 - 100, 100, 50, 4);
+		this.conway.createGlider(0, 0);
 		this.bbox = new Bbox(320, 320, 316, 140, 1);
+		this.soul = new Soul(309, 310, soulImage, 1);
 		
 		// start the game loop
 		this.frame();
@@ -97,6 +100,7 @@ app.main =
 	drawScene : function(ctx, objs)
 	{
 		this.bbox.draw(ctx);
+		this.conway.draw(ctx);
 		this.soul.draw(ctx);
 	},
 	
