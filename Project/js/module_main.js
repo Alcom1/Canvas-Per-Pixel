@@ -23,6 +23,7 @@ app.main =
     ctx : undefined,			// Canvas context
    	lastTime : 0, 				// used by calculateDeltaTime() 
     debug : true,				// debug
+	reset : true,
 	animationID : 0,			//ID index of the current frame.
 	
 	soul : undefined,
@@ -71,7 +72,7 @@ app.main =
 		this.conway.createGlider(4, 24, 1, -1);
 		this.bbox = new Bbox(320, 320, 316, 140, 1);
 		this.soul = new Soul(309, 310, soulImage, soulImageDmg, 1);
-		this.soul.getCollision(this.ctx);
+		this.soul.getCollision(this.ctx);								//Form collision data for player.
 	},
 	
 	//Core update
@@ -81,7 +82,7 @@ app.main =
 	 	this.animationID = requestAnimationFrame(this.frame.bind(this));
 		 
 		//Damage reset
-		if(this.soul.dmg)
+		if(this.reset && this.soul.dmg)
 		{
 			this.setup();	
 		}
@@ -95,13 +96,11 @@ app.main =
 		this.ctx.fillRect(0, 0, this.WIDTH, this.HEIGHT);
 		this.ctx.restore();
 		
-		//Logic
+		//Update
 		this.update(dt);
 		
 		//Draw
-		this.ctx.save();
-		this.drawScene(this.ctx);
-		this.ctx.restore();
+		this.draw(this.ctx);
 		
 		//Draw debug info
 		if (this.debug)
@@ -111,6 +110,7 @@ app.main =
 		}
 	},
 	
+	//Update logic
 	update : function(dt)
 	{
 		this.conway.update(dt);
@@ -120,7 +120,7 @@ app.main =
 	},
 	
 	//Draw the main scene
-	drawScene : function(ctx, objs)
+	draw : function(ctx, objs)
 	{
 		this.bbox.draw(ctx);
 		this.conway.draw(ctx);
@@ -132,7 +132,6 @@ app.main =
 	fillText : function(string, x, y, css, color)
 	{
 		this.ctx.save();
-		// https://developer.mozilla.org/en-US/docs/Web/CSS/font
 		this.ctx.font = css;
 		this.ctx.fillStyle = color;
 		this.ctx.fillText(string, x, y);
@@ -142,14 +141,11 @@ app.main =
 	//Calculate delta-time
 	calculateDeltaTime : function()
 	{
-		// what's with (+ new Date) below?
-		// + calls Date.valueOf(), which converts it from an object to a 	
-		// primitive (number of milliseconds since January 1, 1970 local time)
-		var now,fps;
+		var now, fps;
 		now = (+new Date); 
 		fps = 1000 / (now - this.lastTime);
 		fps = clamp(fps, 12, 60);
 		this.lastTime = now; 
 		return 1/fps;
 	},
-}; // end app.main
+};
