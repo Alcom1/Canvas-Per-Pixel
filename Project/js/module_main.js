@@ -50,8 +50,14 @@ app.main =
 		
 		//Objects
 		this.conway = new Conway(167, 255, 77, 33, 4);
-		this.conway.createEngine(70, 25);
-		this.conway.createEngine(25, 25);
+		this.conway.createEngine(70, 25, 1, 1);
+		this.conway.createEngine(25, 25, 1, 1);
+		this.conway.createEngine(40, 0, 1, 1);
+		this.conway.createEngine(48, 0, 1, 1);
+		this.conway.createEngine(0, 0, 1, 1);
+		this.conway.createGlider(70, 0, -1, 1);
+		this.conway.createGlider(12, 0, 1, 1);
+		this.conway.createGlider(4, 24, 1, -1);
 		this.bbox = new Bbox(320, 320, 316, 140, 1);
 		this.soul = new Soul(309, 310, soulImage, 1);
 		

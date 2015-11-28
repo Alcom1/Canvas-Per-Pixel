@@ -15,7 +15,7 @@ function Conway(x, y, width, height, scale)
 			this.data[j][i] = false;
 		}
 	}
-	this.time = .05;
+	this.time = .08;
 	this.counter = 0;
 }
 
@@ -61,30 +61,30 @@ Conway.prototype.formImageData = function(ctx)
 	return imgData;
 }
 
-Conway.prototype.createGlider = function(x, y)
+Conway.prototype.createGlider = function(x, y, flipX, flipY)
 {
-	this.data[y + 0][x + 0] = true;
-	this.data[y + 1][x + 1] = true;
-	this.data[y + 1][x + 2] = true;
-	this.data[y + 2][x + 0] = true;
-	this.data[y + 2][x + 1] = true;
+	this.data[(y + 0 * flipY).mod(this.data.length)][(x + 0 * flipX).mod(this.data[0].length)] = true;
+	this.data[(y + 1 * flipY).mod(this.data.length)][(x + 1 * flipX).mod(this.data[0].length)] = true;
+	this.data[(y + 1 * flipY).mod(this.data.length)][(x + 2 * flipX).mod(this.data[0].length)] = true;
+	this.data[(y + 2 * flipY).mod(this.data.length)][(x + 0 * flipX).mod(this.data[0].length)] = true;
+	this.data[(y + 2 * flipY).mod(this.data.length)][(x + 1 * flipX).mod(this.data[0].length)] = true;
 }
 
-Conway.prototype.createEngine = function(x, y)
+Conway.prototype.createEngine = function(x, y, flipX, flipY)
 {
-	this.data[y + 0][x + 0] = true;
-	this.data[y + 0][x + 1] = true;
-	this.data[y + 0][x + 2] = true;
-	this.data[y + 0][x + 4] = true;
-	this.data[y + 1][x + 0] = true;
-	this.data[y + 2][x + 3] = true;
-	this.data[y + 2][x + 4] = true;
-	this.data[y + 3][x + 1] = true;
-	this.data[y + 3][x + 2] = true;
-	this.data[y + 3][x + 4] = true;
-	this.data[y + 4][x + 0] = true;
-	this.data[y + 4][x + 2] = true;
-	this.data[y + 4][x + 4] = true;
+	this.data[(y + 0 * flipY).mod(this.data.length)][(x + 0 * flipX).mod(this.data[0].length)] = true;
+	this.data[(y + 0 * flipY).mod(this.data.length)][(x + 1 * flipX).mod(this.data[0].length)] = true;
+	this.data[(y + 0 * flipY).mod(this.data.length)][(x + 2 * flipX).mod(this.data[0].length)] = true;
+	this.data[(y + 0 * flipY).mod(this.data.length)][(x + 4 * flipX).mod(this.data[0].length)] = true;
+	this.data[(y + 1 * flipY).mod(this.data.length)][(x + 0 * flipX).mod(this.data[0].length)] = true;
+	this.data[(y + 2 * flipY).mod(this.data.length)][(x + 3 * flipX).mod(this.data[0].length)] = true;
+	this.data[(y + 2 * flipY).mod(this.data.length)][(x + 4 * flipX).mod(this.data[0].length)] = true;
+	this.data[(y + 3 * flipY).mod(this.data.length)][(x + 1 * flipX).mod(this.data[0].length)] = true;
+	this.data[(y + 3 * flipY).mod(this.data.length)][(x + 2 * flipX).mod(this.data[0].length)] = true;
+	this.data[(y + 3 * flipY).mod(this.data.length)][(x + 4 * flipX).mod(this.data[0].length)] = true;
+	this.data[(y + 4 * flipY).mod(this.data.length)][(x + 0 * flipX).mod(this.data[0].length)] = true;
+	this.data[(y + 4 * flipY).mod(this.data.length)][(x + 2 * flipX).mod(this.data[0].length)] = true;
+	this.data[(y + 4 * flipY).mod(this.data.length)][(x + 4 * flipX).mod(this.data[0].length)] = true;
 }
 
 
