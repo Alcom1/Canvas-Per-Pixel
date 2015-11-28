@@ -67,3 +67,47 @@ Conway.prototype.createGlider = function(x, y)
 	this.data[y + 2][x + 0] = true;
 	this.data[y + 2][x + 1] = true;
 }
+
+Conway.prototype.update = function()
+{
+	for(var j = 0; j < this.data.length; j++)
+	{
+		for(var i = 0; i < this.data[0].length; i++)
+		{
+			this.checkPixel(i, j);
+		}
+	}
+}
+
+Conway.prototype.checkPixel = function(x, y)
+{
+	var check = 0;
+	for(var k = -1; k < 2; k++)
+	{
+		if(this.data[(y + 1) % this.data.length][(x + k) % this.data[0].length])
+		{
+			check++;
+		}
+		if(this.data[(y + 1) % this.data.length][(x + k) % this.data[0].length])
+		{
+			check++;
+		}
+	}
+	if(this.data[y][(x + 1) % this.data[0].length])
+	{
+		check++;
+	}
+	if(this.data[y][(x - 1) % this.data[0].length])
+	{
+		check++;
+	}
+	
+	if(check < 2 || check > 3)
+	{
+		this.data[y][x] = false;
+	}
+	else
+	{
+		this.data[y][x] = true;
+	}
+}

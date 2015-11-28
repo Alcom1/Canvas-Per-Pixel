@@ -91,6 +91,7 @@ app.main =
 	
 	update : function(dt)
 	{
+		this.conway.update();
 		this.bbox.transition(dt);
 		this.soul.move(dt);
 		this.soul.limit(this.bbox.getBound());
