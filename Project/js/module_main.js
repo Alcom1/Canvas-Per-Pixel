@@ -49,7 +49,7 @@ app.main =
 		
 		//Objects
 		this.soul = new Soul(309, 310, soulImage, 1);
-		this.bbox = new Bbox(162, 250, 315, 140, 1);
+		this.bbox = new Bbox(320, 320, 316, 140, 1);
 		
 		// start the game loop
 		this.frame();
@@ -88,8 +88,9 @@ app.main =
 	
 	update : function(dt)
 	{
+		this.bbox.transition(dt);
 		this.soul.move(dt);
-		this.soul.limit(this.bbox);
+		this.soul.limit(this.bbox.getBound());
 	},
 	
 	//Draw the main scene

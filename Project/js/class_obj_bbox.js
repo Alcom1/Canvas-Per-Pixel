@@ -3,35 +3,68 @@ function Bbox(x, y, width, height, scale)
 	Obj.call(
 		this,
 		x, 
-		y,
-		getBboxSprite(width, height), 
+		y, 
 		scale);
+	this.width = width;
+	this.height = height;
+	this.speed = 200;
+	this.newWidth = width;
+	this.newHeight = height;
 }
 
 Bbox.prototype = Object.create(Obj.prototype);
 
-function getBboxSprite(width, height)
+Bbox.prototype.draw = function(ctx)
 {	
-	var subCanvas = document.createElement('canvas');
-	subCanvas.width = width;
-	subCanvas.height = height;
-	var subCtx = subCanvas.getContext('2d');
+	ctx.save();
+	ctx.fillStyle = "#FFF";
+	ctx.fillRect(
+		this.pos.x - this.width / 2,
+		this.pos.y - this.height / 2,
+		this.width,
+		this.height);
 	
-	subCtx.fillStyle = "#FFF";
-	subCtx.fillRect(
-		0,
-		0,
-		subCanvas.width,
-		subCanvas.height);
-	
-	subCtx.clearRect(
-		5, 
-		5, 
-		subCanvas.width - 10, 
-		subCanvas.height - 10);
-	
-	var sprite = new Image();
-	sprite.src = subCanvas.toDataURL("image/png");
-	
-	return sprite;
+	ctx.clearRect(
+		this.pos.x + 5 - this.width / 2, 
+		this.pos.y + 5 - this.height / 2, 
+		this.width - 10, 
+		this.height - 10);
+	ctx.restore();
+}
+
+Bbox.prototype.getBound = function()
+{
+	return [
+		this.pos.x - this.width / 2 + 5,
+		this.pos.y - this.height / 2 + 5,
+		this.pos.x + this.width / 2 - 5,
+		this.pos.y + this.height / 2 - 5];
+}
+
+Bbox.prototype.transition = function(dt)
+{
+	if(this.width < this.newWidth)
+	{
+		this.width += this.speed * dt;
+	}
+	if(this.height < this.newHeight)
+	{
+		this.height += this.speed * dt;
+	}
+	if(this.width > this.newWidth)
+	{
+		this.width -= this.speed * dt;
+	}
+	if(this.height > this.newHeight)
+	{
+		this.height -= this.speed * dt;
+	}
+	if(Math.abs(this.width - this.newWidth) < this.speed * dt)
+	{
+		this.width = this.newWidth;
+	}
+	if(Math.abs(this.height - this.newHeight) < this.speed * dt)
+	{
+		this.height = this.newHeight;
+	}
 }

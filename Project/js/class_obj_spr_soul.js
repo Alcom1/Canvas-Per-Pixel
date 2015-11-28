@@ -1,6 +1,6 @@
 function Soul(x, y, sprite, scale)
 {
-	Obj.call(
+	ObjSpr.call(
 		this,
 		x,
 		y,
@@ -10,7 +10,7 @@ function Soul(x, y, sprite, scale)
 	this.speed = 100;
 }
 
-Soul.prototype = Object.create(Obj.prototype);
+Soul.prototype = Object.create(ObjSpr.prototype);
 
 Soul.prototype.move = function(dt)
 {
@@ -32,22 +32,22 @@ Soul.prototype.move = function(dt)
 	}
 }
 
-Soul.prototype.limit = function(bbox)
+Soul.prototype.limit = function(bound)
 {
-	if(this.pos.x < bbox.pos.x + 5)
+	if(this.pos.x < bound[0])
 	{
-		this.pos.x = bbox.pos.x + 5;
+		this.pos.x = bound[0];
 	}
-	if(this.pos.y < bbox.pos.y + 5)
+	if(this.pos.y < bound[1])
 	{
-		this.pos.y = bbox.pos.y + 5;
+		this.pos.y = bound[1];
 	}
-	if(this.pos.x + this.sprite.width > bbox.pos.x + bbox.sprite.width - 5)
+	if(this.pos.x + this.sprite.width > bound[2])
 	{
-		this.pos.x = bbox.pos.x + bbox.sprite.width - 5 - this.sprite.width;
+		this.pos.x = bound[2] - this.sprite.width;
 	}
-	if(this.pos.y + this.sprite.height > bbox.pos.y + bbox.sprite.height - 5)
+	if(this.pos.y + this.sprite.height > bound[3])
 	{
-		this.pos.y = bbox.pos.y + bbox.sprite.height - 5 - this.sprite.height;
+		this.pos.y = bound[3] - this.sprite.height;
 	}
 }
