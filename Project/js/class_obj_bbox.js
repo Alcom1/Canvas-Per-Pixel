@@ -1,4 +1,4 @@
-//Inherits from obj. Draws a bullet at a centered position with a width and height.
+//Inherits from Obj. Draws a bullet at a centered position with a width and height.
 function Bbox(x, y, width, height, scale)
 {
 	//Inherit from Obj
