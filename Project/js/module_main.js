@@ -49,8 +49,13 @@ app.main =
 		soulImage.src = "assets/heart.png";
 		
 		//Objects
-		this.conway = new Conway(320 - 200, 320 - 100, 100, 50, 4);
+		this.conway = new Conway(167, 255, 77, 33, 4);
 		this.conway.createGlider(0, 0);
+		this.conway.createGlider(10, 10);
+		this.conway.createGlider(20, 0);
+		this.conway.createGlider(30, 10);
+		this.conway.createGlider(40, 0);
+		this.conway.createGlider(20, 20);
 		this.bbox = new Bbox(320, 320, 316, 140, 1);
 		this.soul = new Soul(309, 310, soulImage, 1);
 		

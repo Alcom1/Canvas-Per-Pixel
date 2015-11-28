@@ -46,9 +46,21 @@ Array.prototype.randomElement = function()
 	return this[Math.floor(Math.random() * this.length)];
 }
 
+//Modified mod for negative numbers.
 Number.prototype.mod = function(n)
 {
 	return ((this % n) + n) % n;
 }
+
+//Global square loop.
+var squareLoop = [
+	[0, 1],
+	[1, 1],
+	[1, 0],
+	[1, -1],
+	[0, -1],
+	[-1, -1],
+	[-1, 0],
+	[-1, 1]];
 
 

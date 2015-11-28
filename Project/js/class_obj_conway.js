@@ -81,42 +81,34 @@ Conway.prototype.update = function()
 	{
 		for(var i = 0; i < this.data[0].length; i++)
 		{
-			newData[j][i] = this.checkPixel(i, j);
+			newData[j][i] = this.checkPixel(j, i);
 		}
 	}
 	
 	this.data = newData;
 }
 
-Conway.prototype.checkPixel = function(x, y)
+Conway.prototype.checkPixel = function(j, i)
 {
 	var check = 0;
-	for(var k = -1; k < 1; k++)
+	for(var k = 0; k < 8; k++)
 	{
-		if(this.data[(y + 1) % this.data.length][(x + k) % this.data[0].length])
+		if(this.data
+			[(j + squareLoop[k][0]).mod(this.data.length)]
+			[(i + squareLoop[k][1]).mod(this.data[0].length)])
 		{
 			check++;
 		}
-		if(this.data[(y - 1).mod(this.data.length)][(x + k) % this.data[0].length])
-		{
-			check++;
-		}
-	}
-	if(this.data[y][(x + 1) % this.data[0].length])
-	{
-		check++;
-	}
-	if(this.data[y][(x - 1) % this.data[0].length])
-	{
-		check++;
 	}
 	
-	if(check < 2 || check > 3)
+	if(
+		this.data[j][i] && (check == 2 || check == 3) ||
+		!this.data[j][i] && check == 3)
 	{
-		return false;
+		return true;
 	}
 	else
 	{
-		return true;
+		return false;
 	}
 }
