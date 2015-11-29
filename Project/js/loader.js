@@ -14,6 +14,10 @@ window.onload = function()
 {
 	console.log("window.onload called");
 	
+	//Sound module
+	app.sound.init();
+	app.main.sound = app.sound;
+	
 	//Main module
 	app.main.init();
 }

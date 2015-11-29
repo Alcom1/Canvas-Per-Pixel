@@ -25,7 +25,10 @@ app.main =
     debug : true,				// debug
 	reset : true,
 	animationID : 0,			//ID index of the current frame.
-	prevKeyDown : undefined,
+	prevKeyDown : undefined,	//keyDown from previous frame.
+	
+	//Modules
+	sound : undefined,			//Sound
 	
 	//Game state enum
 	gameState : undefined,
@@ -104,7 +107,8 @@ app.main =
 		//Damage reset
 		if(this.reset && this.soul.dmg)
 		{
-			this.setup();	
+			this.setup();
+			this.sound.playBeep();
 		}
 	 	
 	 	//Calculate Delta Time of frame
