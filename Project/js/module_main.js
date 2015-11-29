@@ -110,6 +110,11 @@ app.main =
 			this.setup();
 			this.sound.playBeep();
 		}
+		
+		for(var i = 0; i < 0; i++)
+		{
+			console.log(this);
+		}
 	 	
 	 	//Calculate Delta Time of frame
 	 	var dt = this.calculateDeltaTime();
@@ -134,7 +139,7 @@ app.main =
 		{
 			// draw dt in bottom right corner
 			this.fillText(
-				"dt: " + dt.toFixed(3),
+				"dt: " + (100 / (60 * dt)).toFixed(1) + "%",
 				this.WIDTH - 140,
 				this.HEIGHT - 10,
 				"24pt undertale",
