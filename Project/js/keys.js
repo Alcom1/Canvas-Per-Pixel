@@ -22,30 +22,15 @@ myKeys.KEYBOARD = Object.freeze
 // this works because JS has "sparse arrays" - not every language does
 myKeys.keydown = [];
 
-
 // event listeners
-window.addEventListener("keydown",function(e)
+window.addEventListener("keydown", function(e)
 {
 	//console.log("keydown=" + e.keyCode);
 	myKeys.keydown[e.keyCode] = true;
 });
 	
-window.addEventListener("keyup",function(e)
+window.addEventListener("keyup", function(e)
 {
 	//console.log("keyup=" + e.keyCode);
 	myKeys.keydown[e.keyCode] = false;
-	
-	// pausing and resuming
-	var char = String.fromCharCode(e.keyCode);
-	if (char == "p" || char == "P")
-	{
-		if (app.main.paused)
-		{
-			app.main.resumeGame();
-		}
-		else
-		{
-			app.main.pauseGame();
-		}
-	}
 });

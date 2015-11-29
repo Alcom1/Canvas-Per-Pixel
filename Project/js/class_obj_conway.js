@@ -17,8 +17,9 @@ function Conway(x, y, width, height, scale)
 			this.data[j][i] = false;
 		}
 	}
-	this.time = .08;	//Second interval between conway updates
-	this.counter = 0;	//Counter for conway updates
+	this.time = .08;		//Second interval between conway updates
+	this.counter = 0;		//Counter for conway updates
+	this.frameCount = 0;	//Number of Conway frames that have passed.
 }
 
 //Inherit from Obj
@@ -111,6 +112,7 @@ Conway.prototype.update = function(dt)
 	{
 		//Reset counter.
 		this.counter = this.counter - this.time;
+		this.frameCount++;
 		
 		//New data for Conway data
 		var newData = [];
@@ -159,4 +161,10 @@ Conway.prototype.checkPixel = function(j, i)
 	{
 		return false;
 	}
+}
+
+//Get the number of frames that have passed.
+Conway.prototype.getFrameCount = function()
+{
+	return this.frameCount;
 }

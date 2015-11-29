@@ -25,10 +25,22 @@ app.main =
     debug : true,				// debug
 	reset : true,
 	animationID : 0,			//ID index of the current frame.
+	prevKeyDown : undefined,
+	
+	//Game state enum
+	gameState : undefined,
+	GAME_STATE: Object.freeze
+	({
+		START : 0,
+		GAME : 1,
+		WIN : 2,
+	}),
 	
 	soul : undefined,
 	bbox : undefined,
 	conway : undefined,
+	
+	soulPos : undefined,
 	
     //Initialization
 	init : function()
@@ -45,21 +57,30 @@ app.main =
 		this.ctx.msImageSmoothingEnabled = false;
 		this.ctx.imageSmoothingEnabled = false;
 		
-		//Setup
-		this.setup();
+		//Key down from previous frame.
+		this.prevKeyDown = myKeys.keydown;
+		
+		//Game State
+		this.gameState = this.GAME_STATE.START;
+		
+		//Bullet box
+		this.bbox = new Bbox(320, 320, 316, 140, 1);
+		
+		//Player Soul
+		this.soulPos = new Vect(309, 310, 0);
+		var soulImage = document.getElementById("heart");
+		var soulImageDmg = document.getElementById("heart_dmg");
+		this.soul = new Soul(this.soulPos.x, this.soulPos.y, soulImage, soulImageDmg, 1);
+		this.soul.getCollision(this.ctx);								//Form collision data for player.
 		
 		// start the game loop
 		this.frame();
 	},
 	
+	//Setup and resetup, is used for init and any reset.
 	setup : function()
 	{
-		//Soul image
-		var soulImage = document.getElementById("heart");
-		var soulImageDmg = document.getElementById("heart_dmg");
-		soulImageDmg.src = "assets/heart_dmg.png";
-		
-		//Objects
+		//Conway
 		this.conway = new Conway(167, 255, 77, 33, 4);
 		this.conway.createEngine(70, 25, 1, 1);
 		this.conway.createEngine(25, 25, 1, 1);
@@ -69,9 +90,9 @@ app.main =
 		this.conway.createGlider(70, 0, -1, 1);
 		this.conway.createGlider(12, 0, 1, 1);
 		this.conway.createGlider(4, 24, 1, -1);
-		this.bbox = new Bbox(320, 320, 316, 140, 1);
-		this.soul = new Soul(309, 310, soulImage, soulImageDmg, 1);
-		this.soul.getCollision(this.ctx);								//Form collision data for player.
+		
+		//Player reset
+		this.soul.pos = this.soulPos.get();
 	},
 	
 	//Core update
@@ -101,38 +122,102 @@ app.main =
 		//Draw
 		this.draw(this.ctx);
 		
+		//Save prevKeyDown for next frame.
+		this.prevKeyDown = myKeys.keydown.slice();
+		
 		//Draw debug info
 		if (this.debug)
 		{
 			// draw dt in bottom right corner
-			this.fillText("dt: " + dt.toFixed(3), this.WIDTH - 140, this.HEIGHT - 10, "18pt courier", "white");
+			this.fillText(
+				"dt: " + dt.toFixed(3),
+				this.WIDTH - 140,
+				this.HEIGHT - 10,
+				"24pt undertale",
+				"white",
+				false);
 		}
 	},
 	
 	//Update logic
 	update : function(dt)
 	{
-		this.conway.update(dt);
-		this.bbox.transition(dt);
-		this.soul.move(dt);
-		this.soul.limit(this.bbox.getBound());
+		switch(this.gameState)
+		{
+			case this.GAME_STATE.START:
+				if(this.prevKeyDown[myKeys.KEYBOARD.KEY_Z] && !myKeys.keydown[myKeys.KEYBOARD.KEY_Z])
+				{
+					//Setup
+					this.setup();
+					this.gameState = this.GAME_STATE.GAME;
+				}
+				break;
+			case this.GAME_STATE.GAME:
+				this.conway.update(dt);
+				this.bbox.transition(dt);
+				this.soul.move(dt);
+				this.soul.limit(this.bbox.getBound());
+				if(this.conway.getFrameCount() > 1340)
+				{
+					this.gameState = this.GAME_STATE.WIN;
+				}
+				break;
+			case this.GAME_STATE.WIN:
+				if(this.prevKeyDown[myKeys.KEYBOARD.KEY_Z] && !myKeys.keydown[myKeys.KEYBOARD.KEY_Z])
+				{
+					this.gameState = this.GAME_STATE.START;
+				}
+				break;
+		}
 	},
 	
 	//Draw the main scene
 	draw : function(ctx, objs)
 	{
-		this.bbox.draw(ctx);
-		this.conway.draw(ctx);
-		this.soul.checkCollision(ctx);
-		this.soul.draw(ctx);
+		switch(this.gameState)
+		{
+			case this.GAME_STATE.START:
+				this.bbox.draw(ctx);
+				this.soul.draw(ctx);
+				this.fillText(
+					"Press 'Z' to start!", 
+					320, 
+					439.75, 
+					"24pt undertale", 
+					"white", 
+					true);
+				break;
+			case this.GAME_STATE.GAME:
+				this.bbox.draw(ctx);
+				this.conway.draw(ctx);
+				this.soul.checkCollision(ctx);
+				this.soul.draw(ctx);
+				break;
+			case this.GAME_STATE.WIN:
+				this.bbox.draw(ctx);
+				this.soul.draw(ctx);
+				this.fillText(
+					"You Win!", 
+					320, 
+					440, 
+					"48pt undertale", 
+					"white", 
+					true);
+				break;
+		}
 	},
 	
 	//Draw filled text
-	fillText : function(string, x, y, css, color)
+	fillText : function(string, x, y, css, color, centered)
 	{
 		this.ctx.save();
+		if(centered)
+		{
+			this.ctx.textAlign = "center";
+			this.ctx.textBaseline="middle"; 
+		}
 		this.ctx.font = css;
-		this.ctx.fillStyle = color;
+		this.ctx.fillStyle = color; 
 		this.ctx.fillText(string, x, y);
 		this.ctx.restore();
 	},

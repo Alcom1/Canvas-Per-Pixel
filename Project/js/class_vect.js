@@ -16,6 +16,12 @@ var Vect = function(a, b, choice)
 	}
 }
 
+//Returns this vector
+Vect.prototype.get = function()
+{
+	return new Vect(this.x, this.y, 0);
+}
+
 //Vector addition
 Vect.prototype.add = function(vect)
 {
